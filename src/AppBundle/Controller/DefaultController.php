@@ -49,4 +49,21 @@ class DefaultController extends Controller
             'todoList' => $todoList,
         ]);
     }
+
+    /**
+     * @Route("/complete/{id_todo}")
+     */
+    public function complete(Request $request, $id_todo)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $todo = $this->getDoctrine()
+            ->getRepository(TODO::class)
+            ->find($id_todo);
+
+        $todo->setStatus(1);
+        $entityManager->persist($todo);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('homepage');
+    }
 }

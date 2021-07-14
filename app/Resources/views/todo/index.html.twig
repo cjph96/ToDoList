@@ -1,16 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container-fluid pt-3 text-center">
+    <div class="container pt-3 text-center">
         <div class="row">
             <div class="col-12">
                 <h3>ToDoList</h3>
             </div>
 
-            <div class="col-6 row">
+            <div class="col-6 row text-left">
                 {% for todo in todoList %}
-                    <div class="col-12">
-                        <h6>{{todo.name}}</h6>
+                    <div class="col-6">
+                        {% if todo.status == 0 %}
+                            <h3 class="text-danger">
+                                {{todo.name}}
+                                
+                            </h3>
+                        {% else %}
+                            <h3 class="text-success">{{todo.name}}</h3>
+                        {% endif %}
+                    </div>
+                    <div class="col-6">
+                        {% if todo.status == 0 %}
+                            <a class="btn btn-primary" href="/complete/{{todo.id}}"> Completar </a>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
@@ -18,9 +30,7 @@
             <div class="col-6 row ">
                 <div class="col-12">
                     <h3>Añadir Tareas</h3>
-                </div>
-                <div class="col-12">
-                    <form method="POST" class="">
+                    <form method="POST" class="text-left">
                         <div class="form-group">
                             <label for="inputname">Nombre</label>
                             <input type="text" class="form-control" id="inputname" name="name" required>
