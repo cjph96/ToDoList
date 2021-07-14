@@ -14,6 +14,9 @@ CRISTIAN PÉREZ: Prueba técnica Backend
 11. Añadir logs de tareas               (30  Minutos) 
 12. Servicio notificaciones por email   (45  Minutos)
 
+**Falta la carpeta vendor**  
+Para que el proyecto funcione es necesario ejecutar:   composer install
+
 **usuarios y contraseñas(sin cifrar)**  
 normal, 1234  
 admin, 1234    este es el unico usuario con rol de administrador  
