@@ -15,21 +15,21 @@ CRISTIAN PÉREZ: Prueba técnica Backend
 12. Servicio notificaciones por email   (45  Minutos)
 
 **usuarios y contraseñas(sin cifrar)**
-normal, 1234
-admin, 1234    este es el unico usuario con rol de administrador
-pepe, 1234
+normal, 1234  
+admin, 1234    este es el unico usuario con rol de administrador  
+pepe, 1234  
 
 **Rutas Basicas**
-/: Se muestran las tareas del usuario
-/admin: Se muetran todas las tareas
-/login: Pagina para autentificarse (Se te redirije aqui si no estas autentificado)
+/: Se muestran las tareas del usuario  
+/admin: Se muetran todas las tareas  
+/login: Pagina para autentificarse (Se te redirije aqui si no estas autentificado)  
 
 
 **ACLARACIÓN**
-He tenido algunas dudas por falta de datos. He asumido que solo podia crear una entidad "TODO", aunque yo habria hecho otra "Lista". He intentado tener un front amigable pero como no está claro cuando usar ajax y cuando no, he usado siempre ajax desde el apartado 6.
-No he tenido ningún problema para terminar la aplicación, a falta de pulir algún detalle como siempre surgen. He tenido que mirar la documentación con mayor frecuencia, debido a que pese a que trabajo bastante en symfony, suelo trabajar en la versión 5 y algunos pequeños cambios, daban errores, pero me he adaptado.
-El servicio de email es de un correo que he creado solo para esta prueba
+He tenido algunas dudas por falta de datos. He asumido que solo podia crear una entidad "TODO", aunque yo habria hecho otra "Lista". He intentado tener un front amigable pero como no está claro cuando usar ajax y cuando no, he usado siempre ajax desde el apartado 6.  
+No he tenido ningún problema para terminar la aplicación, a falta de pulir algún detalle como siempre surgen. He tenido que mirar la documentación con mayor frecuencia, debido a que pese a que trabajo bastante en symfony, suelo trabajar en la versión 5 y algunos pequeños cambios, daban errores, pero me he adaptado.  
+El servicio de email es de un correo que he creado solo para esta prueba  
 
 **POSTDATA**
-La prueba me ha parecido bastante completa y me gustaria que en caso de no ser escogido, me pudierais comentar en que puntos mejorar.
-Muchas Gracias, un saludo.
+La prueba me ha parecido bastante completa y me gustaria que en caso de no ser escogido, me pudierais comentar en que puntos mejorar.  
+Muchas Gracias, un saludo.  
