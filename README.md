@@ -1,77 +1,35 @@
-Symfony Standard Edition
+CRISTIAN PÉREZ: Prueba técnica Backend
 ========================
+(Los tiempos son aproximados)
+1.  Crear proyecto Symfony 3.4          (15 Minutos)
+2.  Crear entidad TODO                  (10 Minutos)
+3.  Crear interfaz.                     (1   Hora)
+4.  Marcar las realizadas.              (45  Minutos)
+5.  Crear comando para añadir tareas    (30  Minutos)
+6.  AJAX.                               (1   Horas   30  Minutos)
+7.  Login y autenticación.              (2   Horas)
+8.  Admin cambiar propietario.          (30  Minutos)
+9.  Añadir creación de usuarios.        (30  Minutos)
+10. Admin puede ver pero no modificar   (30  Minutos)             **Nota:** Hice este paso en el 11
+11. Añadir logs de tareas               (30  Minutos) 
+12. Servicio notificaciones por email   (45  Minutos)
 
-**WARNING**: This distribution does not support Symfony 4. See the
-[Installing & Setting up the Symfony Framework][15] page to find a replacement
-that fits you best.
+**usuarios y contraseñas(sin cifrar)**
+normal, 1234
+admin, 1234    este es el unico usuario con rol de administrador
+pepe, 1234
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
+**Rutas Basicas**
+/: Se muestran las tareas del usuario
+/admin: Se muetran todas las tareas
+/login: Pagina para autentificarse (Se te redirije aqui si no estas autentificado)
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
 
-What's inside?
---------------
+**ACLARACIÓN**
+He tenido algunas dudas por falta de datos. He asumido que solo podia crear una entidad "TODO", aunque yo habria hecho otra "Lista". He intentado tener un front amigable pero como no está claro cuando usar ajax y cuando no, he usado siempre ajax desde el apartado 6.
+No he tenido ningún problema para terminar la aplicación, a falta de pulir algún detalle como siempre surgen. He tenido que mirar la documentación con mayor frecuencia, debido a que pese a que trabajo bastante en symfony, suelo trabajar en la versión 5 y algunos pequeños cambios, daban errores, pero me he adaptado.
+El servicio de email es de un correo que he creado solo para esta prueba
 
-The Symfony Standard Edition is configured with the following defaults:
-
-  * An AppBundle you can use to start coding;
-
-  * Twig as the only configured template engine;
-
-  * Doctrine ORM/DBAL;
-
-  * Swiftmailer;
-
-  * Annotations enabled for everything.
-
-It comes pre-configured with the following bundles:
-
-  * **FrameworkBundle** - The core Symfony framework bundle
-
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
-
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
-
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
-
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev env) - Adds code generation
-    capabilities
-
-  * [**WebServerBundle**][14] (in dev env) - Adds commands for running applications
-    using the PHP built-in web server
-
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  https://symfony.com/doc/3.4/setup.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/3.4/doctrine.html
-[8]:  https://symfony.com/doc/3.4/templating.html
-[9]:  https://symfony.com/doc/3.4/security.html
-[10]: https://symfony.com/doc/3.4/email.html
-[11]: https://symfony.com/doc/3.4/logging.html
-[13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
-[14]: https://symfony.com/doc/current/setup/built_in_web_server.html
-[15]: https://symfony.com/doc/current/setup.html
+**POSTDATA**
+La prueba me ha parecido bastante completa y me gustaria que en caso de no ser escogido, me pudierais comentar en que puntos mejorar.
+Muchas Gracias, un saludo.
