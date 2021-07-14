@@ -11,13 +11,15 @@ use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+use Psr\Log\LoggerInterface;
+
 class DefaultController extends Controller
 {
 
     /**
      * @Route("/", methods={"POST"})
      */
-    public function add(Request $request)
+    public function add(Request $request, LoggerInterface $logger)
     {
         if( $request->request ){
             $req = $request->request;
@@ -39,6 +41,7 @@ class DefaultController extends Controller
                 $entityManager->flush();
 
                 if( $request->isXmlHttpRequest() ) {
+                    $logger->info("El usuario ". $user->getUsername(). " ha creado la tarea: ". $todo->getName(). "(ID:". $todo->getId() .")" );
                     return $this->json('TODO creado con exito');
                 }
 
@@ -46,8 +49,8 @@ class DefaultController extends Controller
             }
         }
 
+        $logger->error('Error al intentar crear una tarea TODO');
         return $this->json('Error');
-
     }
 
     /**
@@ -114,18 +117,25 @@ class DefaultController extends Controller
     /**
      * @Route("/complete/{id_todo}")
      */
-    public function complete(Request $request, $id_todo)
+    public function complete(Request $request, $id_todo, LoggerInterface $logger)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $todo = $this->getDoctrine()
             ->getRepository(TODO::class)
             ->find($id_todo);
+        
+        $id_user = $this->getUser()->getId();
+        $id_user_owner = $todo->getUser()->getId();
+        if( $id_user != $id_user_owner ){
+            return $this->json('Solo el propietario puede cambiar el estado',403);
+        }
 
         $todo->setStatus(1);
         $entityManager->persist($todo);
         $entityManager->flush();
 
         if( $request->isXmlHttpRequest() ) {
+            $logger->info("El usuario ". $todo->getUser()->getUsername(). " ha completado la tarea: ". $todo->getName(). "(ID:". $todo->getId() .")" );
             return $this->json('TODO completado');
         }
         return $this->redirectToRoute('homepage');
@@ -134,7 +144,7 @@ class DefaultController extends Controller
     /**
      * @Route("/TODO/{id_todo}/{id_user}")
      */
-    public function update_TODO_user(Request $request, $id_todo, $id_user)
+    public function update_TODO_user(Request $request, $id_todo, $id_user, LoggerInterface $logger)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -147,13 +157,17 @@ class DefaultController extends Controller
                 ->getRepository(User::class)
                 ->find($id_user)
                 ?? false;
-        if($user === false)
+        if($user === false){
+            $logger->error('Error al intentar cambiar el propietario de una tarea');
             return $this->json('No existe ningún usuario con ese id',404);
+        }
+            
 
         $todo->setUser($user);
 
         $entityManager->persist($todo);
         $entityManager->flush();
+        $logger->info("La tarea: ". $todo->getName(). "(ID:". $todo->getId() .")"." ha cambiado de propietario" );
         return $this->json('Cambio de usuario completado');
 
     }
