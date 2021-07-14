@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid pt-3 text-center">
+        <div class="row">
+            <div class="col-12">
+                <h3>ToDoList</h3>
+            </div>
+
+            <div class="col-6 row">
+                {% for todo in todoList %}
+                    <div class="col-12">
+                        <h6>{{todo.name}}</h6>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-6 row ">
+                <div class="col-12">
+                    <h3>Añadir Tareas</h3>
+                </div>
+                <div class="col-12">
+                    <form method="POST" class="">
+                        <div class="form-group">
+                            <label for="inputname">Nombre</label>
+                            <input type="text" class="form-control" id="inputname" name="name" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Añadir</button>
+                    </form>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+
+</style>
+{% endblock %}

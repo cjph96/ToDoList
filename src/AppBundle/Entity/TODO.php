@@ -49,6 +49,15 @@ class TODO
      */
     private $status;
 
+    public function __construct($name="",$status=0)
+    {
+        $this->name = $name;
+        $this->status = $status;
+        $this->createdAt = new \DateTime();
+
+        $this->dateEnd = new \DateTime();
+        $this->dateEnd->add(new \DateInterval('P1D'));
+    }
 
     /**
      * Get id
