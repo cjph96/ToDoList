@@ -49,6 +49,36 @@ class DefaultController extends Controller
         return $this->json('Error');
 
     }
+
+    /**
+     * @Route("/users/add", methods={"POST"})
+     */
+    public function add_user(Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if( $request->request ){
+            $req = $request->request;
+            $name = $req->get('name') ?? false;
+            $pass = $req->get('password') ?? 1234;
+
+            if($name){
+                $entityManager = $this->getDoctrine()->getManager();
+                $user = new User();
+                $user->setUsername($name);
+                $user->setPassword($pass);
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->json('Usuario creado con exito');
+
+            }
+        }
+
+        return $this->json('Error',404);
+
+    }
+
     /**
      * @Route("/", name="homepage")
      */

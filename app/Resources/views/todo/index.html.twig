@@ -57,6 +57,7 @@
             </div>
 
             <div class="col-6 row ">
+
                 <div class="col-12">
                     <h3>Añadir Tareas</h3>
                     <form id="form" method="POST" class="text-left">
@@ -66,6 +67,22 @@
                         </div>
                         <button type="" class="btn btn-primary">Añadir</button>
                     </form>
+                </div>
+                
+                <div class="col-12">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <h3>Añadir Usuarios</h3>
+                        <div class="form-group">
+                            <label for="inputname">Nombre</label>
+                            <input type="text" class="form-control" id="inputUsername" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputname">Contraseña</label>
+                            <input type="text" class="form-control" id="inputPassword" value="">
+                            <small>Si se deja vacio la contraseña será: 1234</small>
+                        </div>
+                         <button id="add_user" type="" class="btn btn-primary">Añadir Usuario</button>
+                    {% endif %}
                 </div>
                 
             </div>
@@ -116,7 +133,20 @@
             .fail(function() {
                 window.alert( "No se ha podido cambiar de propietario" );
             });
-        });                   
+        });
+
+        $('#add_user').click(function(  ) {
+            const name = $('#inputUsername').val();
+            const pass = $('#inputPassword').val();
+            
+            $.post( "/users/add", { name: name, password: pass})
+            .done(function( data ) {
+                window.alert( "Se ha creado el usuario con exito" );
+            })
+            .fail(function() {
+                window.alert( "No se ha podido crear el usuario" );
+            });
+        });          
     {% endif %}
 </script>
 {% endblock %}
