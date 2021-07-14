@@ -28,6 +28,10 @@ class DefaultController extends Controller
                 $entityManager->persist($todo);
                 $entityManager->flush();
 
+                if( $request->isXmlHttpRequest() ) {
+                    return $this->json('TODO creado con exito');
+                }
+
                 return $this->redirectToRoute('homepage');
             }
         }
@@ -64,6 +68,9 @@ class DefaultController extends Controller
         $entityManager->persist($todo);
         $entityManager->flush();
 
+        if( $request->isXmlHttpRequest() ) {
+            return $this->json('TODO completado');
+        }
         return $this->redirectToRoute('homepage');
     }
 }

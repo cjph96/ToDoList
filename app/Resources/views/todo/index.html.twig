@@ -7,13 +7,12 @@
                 <h3>ToDoList</h3>
             </div>
 
-            <div class="col-6 row text-left">
+            <div class="col-6 row text-left" id="TODOLIST">
                 {% for todo in todoList %}
                     <div class="col-6">
                         {% if todo.status == 0 %}
                             <h3 class="text-danger">
                                 {{todo.name}}
-                                
                             </h3>
                         {% else %}
                             <h3 class="text-success">{{todo.name}}</h3>
@@ -21,7 +20,7 @@
                     </div>
                     <div class="col-6">
                         {% if todo.status == 0 %}
-                            <a class="btn btn-primary" href="/complete/{{todo.id}}"> Completar </a>
+                            <button class="btn btn-primary" value={{todo.id}}> Completar </button>
                         {% endif %}
                     </div>
                 {% endfor %}
@@ -30,12 +29,12 @@
             <div class="col-6 row ">
                 <div class="col-12">
                     <h3>Añadir Tareas</h3>
-                    <form method="POST" class="text-left">
+                    <form id="form" method="POST" class="text-left">
                         <div class="form-group">
                             <label for="inputname">Nombre</label>
                             <input type="text" class="form-control" id="inputname" name="name" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Añadir</button>
+                        <button type="" class="btn btn-primary">Añadir</button>
                     </form>
                 </div>
                 
@@ -43,6 +42,38 @@
 
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    //6. Uso AJAX en lugar de un formulario para crear nuevas TODO
+    $('#form').submit(function( event ) {
+        event.preventDefault();
+
+        const name = $('#inputname').val()
+        $.post( "/", { name: name})
+        .done(function( data ) {
+            window.alert( "Se ha creado un nuevo TODO" );
+            location.reload();
+        })
+        .fail(function() {
+            alert( "No se ha podido crear el TODO" );
+        });
+    });
+
+    $('#TODOLIST button').click(function(  ) {
+
+        const id = $(this).val():
+        $.get( "/complete/"+id)
+        .done(function( data ) {
+            location.reload();
+        })
+        .fail(function() {
+            window.alert( "No se ha podido crear el TODO" );
+        });
+    });
+
+</script>
 {% endblock %}
 
 {% block stylesheets %}
