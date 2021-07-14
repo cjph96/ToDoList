@@ -1,6 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="">{{ app.user.username }}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/admin">Admin</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div>
+                <a class="" href="/logout">Logout</a>
+            </div>
+        </nav>
+    </div>
     <div class="container pt-3 text-center">
         <div class="row">
             <div class="col-12">
@@ -23,6 +46,13 @@
                             <button class="btn btn-primary" value={{todo.id}}> Completar </button>
                         {% endif %}
                     </div>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <div class="col-12 mb-4">
+                                <input class="input_user_id" type="number" id="TODO{{todo.id}}" value={{todo.user.id}}>
+                                <br>
+                                <small>Cambiar propietario de la tarea</small>
+                            </div>
+                        {% endif %}
                 {% endfor %}
             </div>
 
@@ -63,7 +93,7 @@
 
     $('#TODOLIST button').click(function(  ) {
 
-        const id = $(this).val():
+        const id = $(this).val()
         $.get( "/complete/"+id)
         .done(function( data ) {
             location.reload();
@@ -73,6 +103,21 @@
         });
     });
 
+
+    {% if is_granted('ROLE_ADMIN') %}
+        $('.input_user_id').change(function(  ) {
+            const TODO_id = $(this).attr('id').split("TODO")[1];
+            const user_id = $(this).val();
+            
+            $.post( "/TODO/"+TODO_id+"/"+user_id)
+            .done(function( data ) {
+                window.alert( "Se ha cambiado el propietario de la tarea con exito" );
+            })
+            .fail(function() {
+                window.alert( "No se ha podido cambiar de propietario" );
+            });
+        });                   
+    {% endif %}
 </script>
 {% endblock %}
 

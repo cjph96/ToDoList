@@ -101,6 +101,33 @@ class DefaultController extends Controller
         return $this->redirectToRoute('homepage');
     }
 
+    /**
+     * @Route("/TODO/{id_todo}/{id_user}")
+     */
+    public function update_TODO_user(Request $request, $id_todo, $id_user)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $todo = $this->getDoctrine()
+            ->getRepository(TODO::class)
+            ->find($id_todo);
+
+        $user = $this->getDoctrine()
+                ->getRepository(User::class)
+                ->find($id_user)
+                ?? false;
+        if($user === false)
+            return $this->json('No existe ningún usuario con ese id',404);
+
+        $todo->setUser($user);
+
+        $entityManager->persist($todo);
+        $entityManager->flush();
+        return $this->json('Cambio de usuario completado');
+
+    }
+
      /**
      * @Route("/logout", name="logout")
      */
