@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TODO
  *
- * @ORM\Table(name="t_o_d_o")
+ * @ORM\Table(name="todo")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TODORepository")
  */
 class TODO
@@ -48,6 +48,24 @@ class TODO
      * @ORM\Column(name="status", type="integer")
      */
     private $status;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="user")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
     public function __construct($name="",$status=0)
     {

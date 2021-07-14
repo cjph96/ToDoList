@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use AppBundle\Entity\TODO;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,6 +26,15 @@ class DefaultController extends Controller
             if($name){
                 $entityManager = $this->getDoctrine()->getManager();
                 $todo = new TODO($name);
+
+                //Añadir tarea al usuario que la crea
+                $id_user = $this->getUser()->getId();
+                $user = $this->getDoctrine()
+                    ->getRepository(User::class)
+                    ->find($id_user);
+                
+                $todo->setUser($user);
+
                 $entityManager->persist($todo);
                 $entityManager->flush();
 
@@ -43,6 +53,23 @@ class DefaultController extends Controller
      * @Route("/", name="homepage")
      */
     public function indexAction(Request $request)
+    {
+        $id_user = $this->getUser()->getId();
+        
+        $todoList = $this->getDoctrine()
+            ->getRepository(TODO::class)
+            ->getByUserID($id_user);
+
+        return $this->render('todo/index.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'todoList' => $todoList,
+        ]);
+    }
+
+    /**
+     * @Route("/admin", name="admin")
+     */
+    public function admin(Request $request)
     {
         $todoList = $this->getDoctrine()
             ->getRepository(TODO::class)
@@ -72,5 +99,13 @@ class DefaultController extends Controller
             return $this->json('TODO completado');
         }
         return $this->redirectToRoute('homepage');
+    }
+
+     /**
+     * @Route("/logout", name="logout")
+     */
+    public function logout()
+    {
+
     }
 }
