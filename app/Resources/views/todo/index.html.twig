@@ -113,10 +113,11 @@
         const id = $(this).val()
         $.get( "/complete/"+id)
         .done(function( data ) {
+            window.alert( "Se ha completado el TODO" );
             location.reload();
         })
         .fail(function() {
-            window.alert( "No se ha podido crear el TODO" );
+            window.alert( "No se ha podido completar el TODO" );
         });
     });
 

@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 use Psr\Log\LoggerInterface;
+use AppBundle\Service\Notification;
 
 class DefaultController extends Controller
 {
@@ -117,7 +118,7 @@ class DefaultController extends Controller
     /**
      * @Route("/complete/{id_todo}")
      */
-    public function complete(Request $request, $id_todo, LoggerInterface $logger)
+    public function complete(Request $request, $id_todo, LoggerInterface $logger, Notification $notification)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $todo = $this->getDoctrine()
@@ -134,8 +135,12 @@ class DefaultController extends Controller
         $entityManager->persist($todo);
         $entityManager->flush();
 
+        $text = "El usuario ". $todo->getUser()->getUsername(). " ha completado la tarea: ". $todo->getName(). "(ID:". $todo->getId() .")";
+        $logger->info($text);
+
+        $notification->send_email($text,'tarea completada');
+
         if( $request->isXmlHttpRequest() ) {
-            $logger->info("El usuario ". $todo->getUser()->getUsername(). " ha completado la tarea: ". $todo->getName(). "(ID:". $todo->getId() .")" );
             return $this->json('TODO completado');
         }
         return $this->redirectToRoute('homepage');
